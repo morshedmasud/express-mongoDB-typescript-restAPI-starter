@@ -1,0 +1,8 @@
+{
+  "name": "typescript_mongod_typescript",
+  "version": "1.0.0",
+  "description": "Rest API with Express, MongoDB, and Typescript",
+  "main": "server.ts",
+  "author": "Morshed Alam Masud",
+  "license": "MIT"
+}

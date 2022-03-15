@@ -10,6 +10,7 @@ import dbConnect from "../config/mongoose";
 
 const morgan = require("../config/morgan");
 const cors = require("../config/cors");
+const xssClean = require("xss-clean");
 
 const app = express();
 const router = express.Router();
@@ -17,10 +18,11 @@ const router = express.Router();
 app.use(morgan); // Http logger
 app.use(bodyParser.json()); // Json parse
 app.use(cors); // Cors set
-app.use(mongoSanitize); // sanitize mongoose data
+app.use(xssClean()); // sanitize request data
+app.use(mongoSanitize()); // sanitize mongoose data
 
 router.get("/", [], async (req: Request, res: Response) => {
-  return res.status(200).send("tst");
+  return res.status(200).send("express-mongo-typescript boilerplate");
 });
 
 // Router Connections

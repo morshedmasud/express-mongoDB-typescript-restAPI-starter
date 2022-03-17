@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import config from "config";
 import mongoose from "mongoose";
 
 const status = Object.freeze({
@@ -64,7 +63,7 @@ UserSchema.pre("save", async function (next: any) {
   if (!user.isModified("password")) return next();
 
   // Random additional data
-  const salt = await bcrypt.genSalt(config.get("saltWorkFactor"));
+  const salt = await bcrypt.genSalt(10);
 
   const hash = await bcrypt.hashSync(user.password, salt);
 
@@ -96,4 +95,4 @@ UserSchema.methods.toJSON = function () {
 
 const User = mongoose.model<UserDocument>("User", UserSchema);
 
-export default User;
+module.exports = {UserModel: User, UserStatus: status}

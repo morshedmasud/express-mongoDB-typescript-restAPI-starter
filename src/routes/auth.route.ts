@@ -4,18 +4,9 @@ const router = express.Router();
 
 
 // Controller
-const {userRegister, userLogin, userTokenRenew, userInfo} = require('../controllers/user')
-
-// Validation
-const {loginValidation, registerValidation, renewTokenValidation} = require('../validations/user');
-
-// Middleware
-const {isClientAuthenticated, isUserAuthenticated} = require('../middleware/auth')
+const { user } = require('../controllers/auth.controller')
 
 
-router.post('/register', isClientAuthenticated, registerValidation, userRegister);
-router.post('/login', isClientAuthenticated, loginValidation, userLogin);
-router.post('/renew-token', isClientAuthenticated, renewTokenValidation, userTokenRenew);
-router.get('/info', isUserAuthenticated, userInfo);
+router.post('/register', );
 
 module.exports = router;

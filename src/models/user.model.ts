@@ -51,6 +51,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: Object.values(status),
       required: true,
+      default: status.active
     },
   },
   { timestamps: true }

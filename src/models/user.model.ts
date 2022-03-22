@@ -96,4 +96,4 @@ UserSchema.methods.toJSON = function () {
 
 const User = mongoose.model<UserDocument>("User", UserSchema);
 
-module.exports = { UserModel: User, UserStatus: status };
+export { User as UserModel, status as UserStatus };

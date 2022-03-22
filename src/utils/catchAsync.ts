@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from "express";
-
-const response = require("./response");
-const httpStatus = require("http-status");
+import httpStatus from "http-status";
+import apiResponse from "./response";
 
 const catchAsyncErr =
-  (fn: any) => (req: Request, res: Response, next: NextFunction) => {
-    return Promise.resolve(fn(req, res, next)).catch((err) =>
-      response(res, httpStatus.BAD_REQUEST, {
+  (fn: any) => async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      return await Promise.resolve(fn(req, res, next));
+    } catch (err: any) {
+      return apiResponse(res, httpStatus.BAD_REQUEST, {
         message: "message" in err ? err.message : "Something went wrong",
-      })
-    );
+      });
+    }
   };
-module.exports = catchAsyncErr;
+
+export default catchAsyncErr;

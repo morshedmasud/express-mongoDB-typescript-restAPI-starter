@@ -3,24 +3,23 @@ require("dotenv/config");
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import mongoSanitize from "express-mongo-sanitize";
+import { corsSetup } from "../config/cors";
 import expressRateLimit from "../config/express-rate";
 import expressSlowDown from "../config/express-slow-down";
 import logger from "../config/logger";
 import dbConnect from "../config/mongoose";
+import { morgarSetup } from "../config/morgan";
+// Import Routes
+import authRoute from "./routes/auth.route";
 
-const morgan = require("../config/morgan");
-const cors = require("../config/cors");
 const xssClean = require("xss-clean");
-
 const app = express();
 
-// Imported Routes
 const mainRouter = express.Router();
-const authRoute = require("./routes/auth.route");
 
-app.use(morgan); // Http logger
+app.use(morgarSetup); // Http logger
 app.use(bodyParser.json()); // Json parse
-app.use(cors); // Cors set
+app.use(corsSetup); // Cors set
 app.use(xssClean()); // sanitize request data
 app.use(mongoSanitize()); // sanitize mongoose data
 

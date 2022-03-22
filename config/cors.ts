@@ -1,6 +1,6 @@
-const cors = require("cors");
+import cors from "cors";
 
-module.exports = cors({
+export const corsSetup = cors({
   origin: (origin: string, callback: (arg0: null, arg1: boolean) => void) => {
     let string = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.trim() : "*";
     string = string.split(" ").join("");

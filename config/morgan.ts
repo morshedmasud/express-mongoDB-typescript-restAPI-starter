@@ -1,8 +1,6 @@
 const morgan = require("morgan");
 
-const m =
+export const morgarSetup =
   process.env.NODE_ENVIRONMENT === "production"
     ? morgan(":method :url :status")
     : morgan(":method :url :status :res[content-length] - :response-time ms");
-
-module.exports = m;

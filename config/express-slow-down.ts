@@ -1,8 +1,8 @@
-const expressSlowDowner = require("express-slow-down");
+import expressSlowDowner from "express-slow-down";
 
 const expressSlowDown = expressSlowDowner({
-  windowMs: process.env.WINDOW_BLOCK_SECOND || 30 * 1000,
-  delayAfter: process.env.PER_WINDOW_MAX_REQUEST,
+  windowMs: parseInt(process.env.WINDOW_BLOCK_SECOND || "30000"),
+  delayAfter: parseInt(process.env.PER_WINDOW_MAX_REQUEST || "30"),
   delayMs: 500,
 });
 

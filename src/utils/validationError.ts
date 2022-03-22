@@ -18,4 +18,4 @@ const requiredCheck = async <T>(errors: T) => {
   return validationError;
 };
 
-module.exports = { uniqueCheck, requiredCheck };
+export { uniqueCheck, requiredCheck };

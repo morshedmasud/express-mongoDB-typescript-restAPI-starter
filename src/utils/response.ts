@@ -6,7 +6,12 @@ type typeResponseObject = {
   stack: any;
 };
 
-const response = (res: Response, status: number, data: any, optional: any) => {
+const apiResponse = (
+  res: Response,
+  status: number,
+  data: any,
+  optional?: any
+) => {
   const returnObject: typeResponseObject = {
     data: null,
     message: null,
@@ -24,4 +29,4 @@ const response = (res: Response, status: number, data: any, optional: any) => {
   return res.json(returnObject);
 };
 
-module.exports = response;
+export default apiResponse;

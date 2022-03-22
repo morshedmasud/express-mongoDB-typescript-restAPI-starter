@@ -13,7 +13,10 @@ const cors = require("../config/cors");
 const xssClean = require("xss-clean");
 
 const app = express();
-const router = express.Router();
+
+// Imported Routes
+const mainRouter = express.Router();
+const authRoute = require("./routes/auth.route");
 
 app.use(morgan); // Http logger
 app.use(bodyParser.json()); // Json parse
@@ -21,12 +24,13 @@ app.use(cors); // Cors set
 app.use(xssClean()); // sanitize request data
 app.use(mongoSanitize()); // sanitize mongoose data
 
-router.get("/", [], async (req: Request, res: Response) => {
+mainRouter.get("/", [], async (req: Request, res: Response) => {
   return res.status(200).send("express-mongo-typescript boilerplate");
 });
 
 // Router Connections
-app.use(router);
+app.use(mainRouter);
+app.use(authRoute);
 
 if (process.env.NODE_ENVIRONMENT === "production") {
   app.use(expressRateLimit); // per window rate limit

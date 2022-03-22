@@ -11,4 +11,4 @@ const catchAsyncErr =
       })
     );
   };
-module.exports = { catchAsyncErr: catchAsyncErr };
+module.exports = catchAsyncErr;

@@ -1,15 +1,13 @@
 import { Response } from "express";
 
-const httpStatus = require("http-status");
-
-type typeReturnObject = {
-  data: any;
+type typeResponseObject = {
+  data: object | null;
   message: string | null;
   stack: any;
 };
 
-module.exports = (res: Response, status: number, data: any, optional: any) => {
-  const returnObject: typeReturnObject = {
+const response = (res: Response, status: number, data: any, optional: any) => {
+  const returnObject: typeResponseObject = {
     data: null,
     message: null,
     stack: null,
@@ -25,3 +23,5 @@ module.exports = (res: Response, status: number, data: any, optional: any) => {
   res.status(status);
   return res.json(returnObject);
 };
+
+module.exports = response;

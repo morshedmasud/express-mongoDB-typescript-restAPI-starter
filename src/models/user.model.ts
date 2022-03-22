@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: Object.values(status),
       required: true,
-      default: status.active
+      default: status.active,
     },
   },
   { timestamps: true }
@@ -96,4 +96,4 @@ UserSchema.methods.toJSON = function () {
 
 const User = mongoose.model<UserDocument>("User", UserSchema);
 
-module.exports = {UserModel: User, UserStatus: status}
+module.exports = { UserModel: User, UserStatus: status };

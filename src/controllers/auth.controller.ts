@@ -6,6 +6,7 @@ import { UserModel, UserStatus } from "../models/user.model";
 // Utilities
 import catchAsyncErr from "../utils/catchAsync";
 import apiResponse from "../utils/response";
+import { modelValidationCheck } from "../utils/validationError";
 
 const userRegister = catchAsyncErr(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -28,9 +29,13 @@ const userRegister = catchAsyncErr(async (req: Request, res: Response) => {
   // Validate Mongo Model with Data
   const err = newUser.validateSync();
   if (err instanceof mongoose.Error) {
-    console.log(err);
-    // const valid = await validationError.requiredCheck(err.errors);
-    return apiResponse(res, httpStatus.NOT_ACCEPTABLE, {}, err);
+    const valid = await modelValidationCheck(err?.errors);
+    return apiResponse(
+      res,
+      httpStatus.NOT_ACCEPTABLE,
+      { message: "Validation Required" },
+      valid
+    );
   }
   const save = await newUser.save();
 

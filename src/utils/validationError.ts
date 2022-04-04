@@ -5,7 +5,7 @@ import { pick } from "lodash";
 import apiResponse from "./response";
 
 type typeValidationError = {
-  [key: string]: any;
+  [key: string]: string;
 };
 
 const uniqueCheck = async (isUnique: any) => {

@@ -3,16 +3,20 @@ require("dotenv/config");
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import mongoSanitize from "express-mongo-sanitize";
+import passport from "passport";
 import { corsSetup } from "../config/cors";
 import expressRateLimit from "../config/express-rate";
 import expressSlowDown from "../config/express-slow-down";
 import logger from "../config/logger";
 import dbConnect from "../config/mongoose";
 import { morgarSetup } from "../config/morgan";
+import passportHttpInit from "../config/passport-http";
+
 // Import Routes
 import authRoute from "./routes/auth.route";
 
 const xssClean = require("xss-clean");
+
 const app = express();
 
 const mainRouter = express.Router();
@@ -22,6 +26,10 @@ app.use(bodyParser.json()); // Json parse
 app.use(corsSetup); // Cors set
 app.use(xssClean()); // sanitize request data
 app.use(mongoSanitize()); // sanitize mongoose data
+
+app.use(passport.initialize()); // passport authentication initialize
+passport.use("basic", passportHttpInit); // passport http authentication initialize
+//passport.use("jwt", passportJwt);
 
 mainRouter.get("/", [], async (req: Request, res: Response) => {
   return res.status(200).send("express-mongo-typescript boilerplate");

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 // Model
 import { UserModel, UserStatus } from "../models/user.model";
 // Utilities
@@ -8,6 +8,29 @@ import catchAsyncErr from "../utils/catchAsync";
 import apiResponse from "../utils/response";
 import { accessTokenDetailAndRefreshTokenDetail } from "../utils/tokens";
 import { modelValidationCheck } from "../utils/validationError";
+
+const jwt = require("jsonwebtoken");
+
+type userT = {
+  _id: ObjectId;
+  name: string;
+  email: string;
+};
+
+type headerT = {
+  alg: string;
+  typ: string;
+};
+
+interface jwtI {
+  header: headerT;
+  payload: {
+    user: userT;
+    exp: number;
+    iat: number;
+  };
+  signature: string;
+}
 
 const userRegister = catchAsyncErr(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -71,4 +94,47 @@ const userLogin = catchAsyncErr(async (req: any, res: Response) => {
   });
 });
 
-export { userRegister, userLogin };
+const renewToken = catchAsyncErr(async (req: any, res: Response) => {
+  const { access, refresh } = req.body;
+
+  const accessDetail: jwtI = jwt.decode(access, { complete: true });
+  const refreshDetail: jwtI = jwt.decode(refresh, { complete: true });
+
+  if (
+    accessDetail &&
+    accessDetail?.payload?.user &&
+    refreshDetail &&
+    refreshDetail?.payload?.user
+  ) {
+    // Checking Refresh Token Expired Date
+    if (new Date(refreshDetail.payload.exp) < new Date())
+      return apiResponse(res, httpStatus.UNAUTHORIZED, {
+        message: "Session expired. Please login again.",
+      });
+
+    const user = await UserModel.findOne({
+      _id: refreshDetail.payload.user._id,
+    });
+    if (!user)
+      return apiResponse(res, httpStatus.BAD_REQUEST, {
+        message: "something went wrong!",
+      });
+
+    // Generate Tokens
+    const tokens = await accessTokenDetailAndRefreshTokenDetail(
+      { _id: user._id, name: user.name, email: user.email },
+      req.client.secret
+    );
+
+    return apiResponse(res, httpStatus.CREATED, {
+      data: tokens,
+      message: "Token Renewed.",
+    });
+  }
+
+  return apiResponse(res, httpStatus.UNAUTHORIZED, {
+    message: "Session expired. Please login again.",
+  });
+});
+
+export { userRegister, userLogin, renewToken };

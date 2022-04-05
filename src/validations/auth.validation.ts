@@ -20,6 +20,14 @@ const login = {
   }),
 };
 
+const renew = {
+  body: Joi.object({
+    access: Joi.string().required(),
+    refresh: Joi.string().required()
+  }),
+};
+
 const registerValidation = validateRequest(register);
 const loginValidation = validateRequest(login);
-export { registerValidation, loginValidation };
+const renewValidation = validateRequest(renew);
+export { registerValidation, loginValidation, renewValidation };

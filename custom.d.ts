@@ -1,10 +1,10 @@
-type typeClientObject = {
+interface typeClientI {
   name: string;
-  email: string;
-};
+  secret: string;
+}
 
 declare namespace Express {
   export interface Request {
-    client?: typeClientObject;
+    client?: typeClientI;
   }
 }

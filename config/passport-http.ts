@@ -7,8 +7,9 @@ const passportHttpInit = new passportHttp.BasicStrategy(
       secret === process.env.JWT_BASIC_SECRET
         ? { name, secret }
         : null;
-    if (!client) return done("invalid client", client);
-    return done(null, client);
+    if (!client) return done("invalid client", "client");
+
+    return done(null, { name, secret });
   }
 );
 

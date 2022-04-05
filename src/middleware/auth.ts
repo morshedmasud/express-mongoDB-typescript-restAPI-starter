@@ -17,7 +17,7 @@ const isClientAuthenticated = catchAsyncErr(
         return response(res, httpStatus.UNAUTHORIZED, {
           message: "Invalid Client",
         });
-
+      req.client = user;
       return next();
     })(req, res, next);
   }

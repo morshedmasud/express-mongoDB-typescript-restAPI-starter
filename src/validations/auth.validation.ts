@@ -11,5 +11,15 @@ const register = {
   }),
 };
 
+const login = {
+  body: Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string()
+      .regex(/^[\w]{6,30}$/)
+      .required(),
+  }),
+};
+
 const registerValidation = validateRequest(register);
-export { registerValidation };
+const loginValidation = validateRequest(login);
+export { registerValidation, loginValidation };

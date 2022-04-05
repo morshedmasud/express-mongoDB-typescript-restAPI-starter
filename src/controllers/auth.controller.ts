@@ -42,4 +42,33 @@ const userRegister = catchAsyncErr(async (req: Request, res: Response) => {
   return apiResponse(res, httpStatus.CREATED, { data: save });
 });
 
-export { userRegister };
+const userLogin = catchAsyncErr(async (req: any, res: Response) => {
+  const { email, password } = req.body;
+
+  // Check User by Email
+  const user = await UserModel.findOne({ email: email });
+  if (!user)
+    return apiResponse(res, httpStatus.NOT_ACCEPTABLE, {
+      message: "Invalid email or password",
+    });
+
+  // User Password Check
+  const validPass = await user.comparePassword(password);
+  if (!validPass)
+    return apiResponse(res, httpStatus.NOT_ACCEPTABLE, {
+      message: "Password Not Matched.",
+    });
+
+  // Generate Tokens
+  // const tokens = await accessTokenDetailAndRefreshTokenDetail(
+  //   {_id: user._id, name: user.name, email: user.email},
+  //   req?.client?._id
+  // );
+
+  console.log(req.client);
+  return apiResponse(res, httpStatus.OK, {
+    data: { user: user, tokens: "sdfkj" },
+  });
+});
+
+export { userRegister, userLogin };

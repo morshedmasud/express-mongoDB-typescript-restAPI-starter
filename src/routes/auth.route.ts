@@ -6,10 +6,9 @@ import { isClientAuthenticated } from "../middleware/auth";
 // Validation
 import { loginValidation, registerValidation } from "../validations/auth.validation";
 
-
 const router = Router();
 
-router.post("/api/auth/register", isClientAuthenticated, registerValidation, userRegister);
-router.post("/api/auth/login", isClientAuthenticated, loginValidation, userLogin);
+router.post("/register", isClientAuthenticated, registerValidation, userRegister);
+router.post("/login", isClientAuthenticated, loginValidation, userLogin);
 
 export default router;

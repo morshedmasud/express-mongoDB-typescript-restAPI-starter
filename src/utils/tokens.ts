@@ -1,7 +1,5 @@
-import { Request } from "express";
 import jsonwebtoken from "jsonwebtoken";
 import { ObjectId } from "mongoose";
-import { UserModel } from "../models/user.model";
 
 type typeUserObject = {
   _id: ObjectId;
@@ -38,7 +36,7 @@ const accessTokenDetailAndRefreshTokenDetail = async (
   const accessToken = await generateToken(
     user,
     accessTokenExpiredAt,
-    clientSecret
+    process.env.JWT_ACCESS_SECRET as string
   );
 
   const refreshTokenExpiredAt = refreshDate.setMinutes(
@@ -49,7 +47,7 @@ const accessTokenDetailAndRefreshTokenDetail = async (
   const refreshToken = await generateToken(
     user,
     refreshTokenExpiredAt,
-    clientSecret
+    process.env.JWT_REFRESH_SECRET as string
   );
 
   const tokens = {
@@ -79,16 +77,4 @@ const accessTokenDetailAndRefreshTokenDetail = async (
   return tokens;
 };
 
-const getUserInfoByToken = async (req: Request) => {
-  const accessToken = req.headers["authorization"].split(" ")[1];
-  const decoded = jsonwebtoken.decode(accessToken, { complete: true });
-  let t = "dsf";
-
-  const user = await UserModel.findOne({ _id: decoded.payload.user._id });
-
-  if (user) return user;
-
-  return null;
-};
-
-export { accessTokenDetailAndRefreshTokenDetail, getUserInfoByToken };
+export { accessTokenDetailAndRefreshTokenDetail };

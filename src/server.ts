@@ -11,9 +11,10 @@ import logger from "../config/logger";
 import dbConnect from "../config/mongoose";
 import { morgarSetup } from "../config/morgan";
 import passportHttpInit from "../config/passport-http";
-
+import passportJwtInit from "../config/passport-jwt";
 // Import Routes
 import authRoute from "./routes/auth.route";
+import userRoute from "./routes/user.route";
 
 const xssClean = require("xss-clean");
 
@@ -29,7 +30,7 @@ app.use(mongoSanitize()); // sanitize mongoose data
 
 app.use(passport.initialize()); // passport authentication initialize
 passport.use("basic", passportHttpInit); // passport http authentication initialize
-//passport.use("jwt", passportJwt);
+passport.use("jwt", passportJwtInit); // passport jwt authentication initialize
 
 mainRouter.get("/", [], async (req: Request, res: Response) => {
   return res.status(200).send("express-mongo-typescript boilerplate");
@@ -37,7 +38,8 @@ mainRouter.get("/", [], async (req: Request, res: Response) => {
 
 // Router Connections
 app.use(mainRouter);
-app.use(authRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
 
 if (process.env.NODE_ENVIRONMENT === "production") {
   app.use(expressRateLimit); // per window rate limit

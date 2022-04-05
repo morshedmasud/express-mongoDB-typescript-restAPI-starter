@@ -1,0 +1,150 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "http://localhost:3031",
+      "description": "",
+      "variables": {}
+    }
+  ],
+  "info": {
+    "version": "1.0.0",
+    "title": "RestAPI with Express, MongoDB, and Typescript",
+    "description": "Starter restApi service with Express and MongoDb.",
+    "termsOfService": "",
+    "contact": {
+      "name": "Md Morshed Alam Masud",
+      "email": "morshed.dev@gmail.com"
+    },
+    "license": {
+      "name": "ISC"
+    }
+  },
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "User Register",
+        "operationId": "UserRegister",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": [{ "basic": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "test user",
+                  "email": "test@test.com",
+                  "password": "123456"
+                }
+              },
+              "example": "{\n    \"name\": \"test user\",\n    \"email\": \"test@test.com\",\n    \"password\": \"123456\"\n}"
+            }
+          }
+        },
+        "tags": ["Auth"]
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "User Login",
+        "operationId": "UserLogin",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": [{ "basic": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "test@gmail.com",
+                  "password": "123456"
+                }
+              },
+              "example": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"123456\"\n}"
+            }
+          }
+        },
+        "tags": ["Auth"]
+      }
+    },
+    "/api/user/info": {
+      "get": {
+        "summary": "User Info",
+        "operationId": "UserInfo",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": [{ "bearer": [] }],
+        "tags": ["User"]
+      }
+    },
+    "/api/auth/renew-token": {
+      "post": {
+        "summary": "Renew Token",
+        "operationId": "RenewToken",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": [{ "basic": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZTZlOGU3MGM2MDcyYzZiY2RkNTRmNSIsIm5hbWUiOiJNYXN1ZCBNb3JzaGVkIiwiZW1haWwiOiJtb3JzaGVkLmRldkBnbWFpbC5jb20ifSwiZXhwIjoxNjQyNzkyNDQzMDQxLCJpYXQiOjE2NDI3MDYwNDN9.tKfjnd4MhvwOLVu27sYrTp4kI4lMFLtYfwV1BdESK-w",
+                  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZTZlOGU3MGM2MDcyYzZiY2RkNTRmNSIsIm5hbWUiOiJNYXN1ZCBNb3JzaGVkIiwiZW1haWwiOiJtb3JzaGVkLmRldkBnbWFpbC5jb20ifSwiZXhwIjoxNjQyOTY1MjQzMDQxLCJpYXQiOjE2NDI3MDYwNDN9.2JxE19trbqmeS4eLQTey9fIYJgg0L0oh3oNrQG-Ijr8"
+                }
+              },
+              "example": "{\r\n    \"access\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZTZlOGU3MGM2MDcyYzZiY2RkNTRmNSIsIm5hbWUiOiJNYXN1ZCBNb3JzaGVkIiwiZW1haWwiOiJtb3JzaGVkLmRldkBnbWFpbC5jb20ifSwiZXhwIjoxNjQyNzkyNDQzMDQxLCJpYXQiOjE2NDI3MDYwNDN9.tKfjnd4MhvwOLVu27sYrTp4kI4lMFLtYfwV1BdESK-w\",\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZTZlOGU3MGM2MDcyYzZiY2RkNTRmNSIsIm5hbWUiOiJNYXN1ZCBNb3JzaGVkIiwiZW1haWwiOiJtb3JzaGVkLmRldkBnbWFpbC5jb20ifSwiZXhwIjoxNjQyOTY1MjQzMDQxLCJpYXQiOjE2NDI3MDYwNDN9.2JxE19trbqmeS4eLQTey9fIYJgg0L0oh3oNrQG-Ijr8\"\r\n}"
+            }
+          }
+        },
+        "tags": ["Auth"]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basic": {
+        "type": "http",
+        "scheme": "basic"
+      },
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [],
+  "tags": [],
+  "externalDocs": {
+    "url": "",
+    "description": ""
+  },
+  "warnings": []
+}

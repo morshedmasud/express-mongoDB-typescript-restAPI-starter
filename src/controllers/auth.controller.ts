@@ -6,6 +6,7 @@ import { UserModel, UserStatus } from "../models/user.model";
 // Utilities
 import catchAsyncErr from "../utils/catchAsync";
 import apiResponse from "../utils/response";
+import { accessTokenDetailAndRefreshTokenDetail } from "../utils/tokens";
 import { modelValidationCheck } from "../utils/validationError";
 
 const userRegister = catchAsyncErr(async (req: Request, res: Response) => {
@@ -60,14 +61,13 @@ const userLogin = catchAsyncErr(async (req: any, res: Response) => {
     });
 
   // Generate Tokens
-  // const tokens = await accessTokenDetailAndRefreshTokenDetail(
-  //   {_id: user._id, name: user.name, email: user.email},
-  //   req?.client?._id
-  // );
+  const tokens = await accessTokenDetailAndRefreshTokenDetail(
+    { _id: user._id, name: user.name, email: user.email },
+    req.client.secret
+  );
 
-  console.log(req.client);
   return apiResponse(res, httpStatus.OK, {
-    data: { user: user, tokens: "sdfkj" },
+    data: { user, tokens },
   });
 });
 

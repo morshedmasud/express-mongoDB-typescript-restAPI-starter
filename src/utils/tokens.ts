@@ -1,3 +1,4 @@
+import { Request } from "express";
 import jsonwebtoken from "jsonwebtoken";
 import { ObjectId } from "mongoose";
 import { UserModel } from "../models/user.model";
@@ -8,11 +9,15 @@ type typeUserObject = {
   email: string;
 };
 
-const generateToken = (user: typeUserObject, exp: string, secret: string) => {
+const generateToken = async (
+  user: typeUserObject,
+  expiredAt: number,
+  secret: string
+) => {
   return jsonwebtoken.sign(
     {
       user: { _id: user._id, name: user.name, email: user.email },
-      exp: new Date(exp).getTime(),
+      exp: new Date(expiredAt).getTime(),
     },
     secret
   );
@@ -20,34 +25,37 @@ const generateToken = (user: typeUserObject, exp: string, secret: string) => {
 
 const accessTokenDetailAndRefreshTokenDetail = async (
   user: typeUserObject,
-  clientId: string
+  clientSecret: string
 ) => {
   let accessDate = new Date();
   let refreshDate = new Date();
 
-  const exp = accessDate.setMinutes(
+  const accessTokenExpiredAt = accessDate.setMinutes(
     accessDate.getMinutes() +
-      parseInt(process.env.JWT_ACCESS_EXPIRATION_MINUTES)
+      parseInt(process.env.JWT_ACCESS_EXPIRATION_MINUTES as string)
   );
+
   const accessToken = await generateToken(
     user,
-    exp,
-    process.env.JWT_ACCESS_SECRET
+    accessTokenExpiredAt,
+    clientSecret
   );
-  const exp2 = refreshDate.setMinutes(
+
+  const refreshTokenExpiredAt = refreshDate.setMinutes(
     refreshDate.getMinutes() +
-      parseInt(process.env.JWT_REFRESH_EXPIRATION_MINUTES)
+      parseInt(process.env.JWT_REFRESH_EXPIRATION_MINUTES as string)
   );
+
   const refreshToken = await generateToken(
     user,
-    exp2,
-    process.env.JWT_REFRESH_SECRET
+    refreshTokenExpiredAt,
+    clientSecret
   );
 
   const tokens = {
     access: {
       token: accessToken,
-      expiredAt: new Date(exp).toLocaleDateString("en-US", {
+      expiredAt: new Date(accessTokenExpiredAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "2-digit",
@@ -58,7 +66,7 @@ const accessTokenDetailAndRefreshTokenDetail = async (
     },
     refresh: {
       token: refreshToken,
-      expiredAt: new Date(exp2).toLocaleDateString("en-US", {
+      expiredAt: new Date(refreshTokenExpiredAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "2-digit",
@@ -71,9 +79,10 @@ const accessTokenDetailAndRefreshTokenDetail = async (
   return tokens;
 };
 
-const getUserInfoByToken = async (req) => {
+const getUserInfoByToken = async (req: Request) => {
   const accessToken = req.headers["authorization"].split(" ")[1];
   const decoded = jsonwebtoken.decode(accessToken, { complete: true });
+  let t = "dsf";
 
   const user = await UserModel.findOne({ _id: decoded.payload.user._id });
 

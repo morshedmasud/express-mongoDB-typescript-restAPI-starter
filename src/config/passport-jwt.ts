@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose";
 import passportJwt from "passport-jwt";
-import { UserModel } from "../src/models/user.model";
+import { UserModel } from "../models/user.model";
 
 const passportJwtInit = new passportJwt.Strategy(
   {

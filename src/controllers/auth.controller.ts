@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import mongoose, { ObjectId } from "mongoose";
+import { ObjectId } from "mongoose";
 // Model
 import { UserModel, UserStatus } from "../models/user.model";
 // Utilities
@@ -10,6 +10,7 @@ import { accessTokenDetailAndRefreshTokenDetail } from "../utils/tokens";
 import { modelValidationCheck } from "../utils/validationError";
 
 const jwt = require("jsonwebtoken");
+const mongoose = require('mongoose')
 
 type userT = {
   _id: ObjectId;

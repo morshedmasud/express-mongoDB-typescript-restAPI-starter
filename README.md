@@ -28,7 +28,7 @@ yarn install
 ```shell script
 cp .env.example .env
 ```
-4. Finally, run the project by 
+4. Run the project
 ```shell script
 yarn run dev
 ```

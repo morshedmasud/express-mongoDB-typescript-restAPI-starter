@@ -1,4 +1,4 @@
-import cors from "cors";
+const cors = require("cors");
 
 export const corsSetup = cors({
   origin: (origin: string, callback: (arg0: null, arg1: boolean) => void) => {

@@ -33,8 +33,7 @@ const UserSchema = new mongoose.Schema(
       max: 255,
       unique: true,
       trim: true,
-      lowercase: true,
-      match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/],
+      lowercase: true
     },
     photo: {
       type: String,

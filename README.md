@@ -1,4 +1,4 @@
-# Simple Blog Rest API Service
+# Express, Mongodb, Typescript RestAPI Service
 
 ## Technology used
 1. Node
@@ -10,8 +10,10 @@
 * User SignIn/SignUp
 * Basic Authentication with jwt-http
 * OAuth 2.0 (Authentication with Access & Refresh Token)
+* Unit Testing (Coming Soon)
 * Email Verification (Coming Soon)
-* Swagger Documentation
+* Swagger Documentation (Coming Soon)
+* Docker (Coming Soon)
 
 ## Setup in your local machine
 1. Clone project

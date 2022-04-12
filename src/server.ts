@@ -19,8 +19,7 @@ import userRoute from "./routes/user.route";
 
 const xssClean = require("xss-clean");
 
-const swaggerFile: any = "../swagger.json";
-const tempyml: any = "../temp.yaml";
+const swaggerFile = require("../swagger");
 const app = express();
 
 app.use(morgarSetup); // Http logger
@@ -40,7 +39,7 @@ indexRouter.get("/", [], async (req: Request, res: Response) => {
 
 // Router Connections
 app.use(indexRouter);
-app.use("/swagger-docs", swaggerUi.serve, swaggerUi.setup(tempyml));
+app.use("/swagger-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile)); // Swagger Routing
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 

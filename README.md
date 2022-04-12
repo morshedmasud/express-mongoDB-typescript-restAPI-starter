@@ -10,9 +10,10 @@
 * User SignIn/SignUp
 * Basic Authentication with jwt-http
 * OAuth 2.0 (Authentication with Access & Refresh Token)
+* Data Validation with JOI
 * Unit Testing (Coming Soon)
 * Email Verification (Coming Soon)
-* Swagger Documentation (Coming Soon)
+* Swagger Documentation
 * Docker (Coming Soon)
 
 ## Setup in your local machine

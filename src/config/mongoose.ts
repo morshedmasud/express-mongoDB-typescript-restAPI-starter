@@ -4,8 +4,6 @@ import logger from "@main/config/logger";
 const dbConnect = async () => {
   const dbUrl = process.env.DB_URL as string;
 
-  console.log(dbUrl);
-
   return mongoose
     .connect(dbUrl, {
       useNewUrlParser: true,

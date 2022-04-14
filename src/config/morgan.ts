@@ -35,10 +35,12 @@ export const expressDevLogger = (
     const elapsedHrTime = process.hrtime(startHrTime);
     const elapsedTimeInMs = elapsedHrTime[0] * 1000 + elapsedHrTime[1] / 1e6;
 
-    // console.log(`Response ${res.statusCode} ${elapsedTimeInMs.toFixed(3)} ms`);
+    // console.log(
+    //   `Response test ${res.statusCode} ${elapsedTimeInMs.toFixed(3)} ms`
+    // );
 
     const body = Buffer.concat(chunks).toString("utf8");
-    // console.log(`Response Body: ${body}`);
+    console.log(`Response Body: ${body}`);
     (oldEnd as Function).apply(res, arguments);
   };
 

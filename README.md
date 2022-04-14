@@ -36,7 +36,7 @@ cp .env.example .env
 yarn run dev
 
 // build project
-yarn run build
+yarn build
 
 // production server
 yarn run start

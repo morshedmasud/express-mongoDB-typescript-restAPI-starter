@@ -5,12 +5,14 @@ import expressRateLimit from "@main/config/express-rate";
 import expressSlowDown from "@main/config/express-slow-down";
 import logger from "@main/config/logger";
 import dbConnect from "@main/config/mongoose";
-import { morgarSetup } from "@main/config/morgan";
+import { expressDevLogger } from "@main/config/morgan";
 import passportHttpInit from "@main/config/passport-http";
 import passportJwtInit from "@main/config/passport-jwt";
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import mongoSanitize from "express-mongo-sanitize";
+import morgan from "morgan";
+import morganBody from "morgan-body";
 import passport from "passport";
 import swaggerUi from "swagger-ui-express";
 // Import Routes
@@ -22,11 +24,14 @@ const xssClean = require("xss-clean");
 const swaggerFile = require("../swagger");
 const app = express();
 
-app.use(morgarSetup); // Http logger
 app.use(bodyParser.json()); // Json parse
 app.use(corsSetup); // Cors set
 app.use(xssClean()); // sanitize request data
 app.use(mongoSanitize()); // sanitize mongoose data
+
+
+morganBody(app);
+app.use(expressDevLogger); // Custome logger
 
 app.use(passport.initialize()); // passport authentication initialize
 passport.use("basic", passportHttpInit); // passport http authentication initialize

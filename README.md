@@ -29,10 +29,18 @@ yarn install
 ```shell script
 cp .env.example .env
 ```
-4. Run the project
+4. Start your mongodb service.
+5. Run the project
 ```shell script
+// development server
 yarn run dev
+
+// build project
+yarn run build
+
+// production server
+yarn run start
 ```
 
 #### Open the following url for view swagger documentation
-## (http://localhost:3031/swagger-doc)
+## (http://localhost:3031/swagger-docs)

@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
 // Model
-import { UserModel, UserStatus } from "../models/user.model";
+import { UserModel, UserStatus } from "@main/models/user.model";
 // Services
-import { getUserInfoByToken } from "../services/user.service";
+import { getUserInfoByToken } from "@main/services/user.service";
 // Utilities
-import catchAsyncErr from "../utils/catchAsync";
-import apiResponse from "../utils/response";
+import catchAsyncErr from "@main/utils/catchAsync";
+import apiResponse from "@main/utils/response";
 
 const userInfo = catchAsyncErr(async (req: Request, res: Response) => {
   const user = await getUserInfoByToken(req);
-  
+
   if (!user)
     return apiResponse(res, httpStatus.NOT_ACCEPTABLE, {
       message: "User Not Found",

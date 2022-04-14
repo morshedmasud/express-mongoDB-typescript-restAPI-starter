@@ -1,10 +1,18 @@
 import { Router } from "express";
 // Controller
-import { userLogin, userRegister, renewToken } from "../controllers/auth.controller";
+import {
+  renewToken,
+  userLogin,
+  userRegister,
+} from "@main/controllers/auth.controller";
 // Middleware
-import { isClientAuthenticated } from "../middleware/auth";
+import { isClientAuthenticated } from "@main/middleware/auth";
 // Validation
-import { loginValidation, registerValidation, renewValidation } from "../validations/auth.validation";
+import {
+  loginValidation,
+  registerValidation,
+  renewValidation,
+} from "@main/validations/auth.validation";
 
 const router = Router();
 

@@ -1,8 +1,8 @@
 import { Router } from "express";
 // Controller
-import { userInfo } from "../controllers/user.controller";
+import { userInfo } from "@main/controllers/user.controller";
 // Middleware
-import { isUserAuthenticated } from "../middleware/auth";
+import { isUserAuthenticated } from "@main/middleware/auth";
 // Validation
 
 const router = Router();

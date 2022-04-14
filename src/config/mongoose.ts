@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-import logger from "../config/logger";
+import logger from "@main/config/logger";
 
 const dbConnect = async () => {
   const dbUrl = process.env.DB_URL as string;

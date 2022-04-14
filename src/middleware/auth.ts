@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import passport from "passport";
-import catchAsyncErr from "../utils/catchAsync";
-import response from "../utils/response";
+import catchAsyncErr from "@main/utils/catchAsync";
+import response from "@main/utils/response";
 
 const isClientAuthenticated = catchAsyncErr(
   async (req: Request, res: Response, next: NextFunction) => {

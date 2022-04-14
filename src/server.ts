@@ -1,21 +1,21 @@
 require("dotenv/config");
 
+import { corsSetup } from "@main/config/cors";
+import expressRateLimit from "@main/config/express-rate";
+import expressSlowDown from "@main/config/express-slow-down";
+import logger from "@main/config/logger";
+import dbConnect from "@main/config/mongoose";
+import { morgarSetup } from "@main/config/morgan";
+import passportHttpInit from "@main/config/passport-http";
+import passportJwtInit from "@main/config/passport-jwt";
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import mongoSanitize from "express-mongo-sanitize";
 import passport from "passport";
 import swaggerUi from "swagger-ui-express";
-import { corsSetup } from "./config/cors";
-import expressRateLimit from "./config/express-rate";
-import expressSlowDown from "./config/express-slow-down";
-import logger from "./config/logger";
-import dbConnect from "./config/mongoose";
-import { morgarSetup } from "./config/morgan";
-import passportHttpInit from "./config/passport-http";
-import passportJwtInit from "./config/passport-jwt";
 // Import Routes
-import authRoute from "./routes/auth.route";
-import userRoute from "./routes/user.route";
+import authRoute from "@main/routes/auth.route";
+import userRoute from "@main/routes/user.route";
 
 const xssClean = require("xss-clean");
 

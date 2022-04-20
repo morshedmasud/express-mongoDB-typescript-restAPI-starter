@@ -11,10 +11,10 @@
 * Basic Authentication with jwt-http
 * OAuth 2.0 (Authentication with Access & Refresh Token)
 * Data Validation with JOI
-* Unit Testing (Coming Soon)
+* Unit Testing
 * Email Verification (Coming Soon)
-* Swagger Documentation
 * Docker (Coming Soon)
+* Swagger Documentation
 
 ## Setup in your local machine
 1. Clone project
@@ -29,10 +29,27 @@ yarn install
 ```shell script
 cp .env.example .env
 ```
-4. Run the project
+4. Start your mongodb service.
+5. Run the project
 ```shell script
+// development server
 yarn run dev
+
+// build project
+yarn build
+
+// production server
+yarn run start
+```
+
+6. Testing
+```shell script
+// run all unit-test
+yarn run test:unit
+
+// run individual unit-test file
+yarn run test:unit src/services/__tests__/auth.ts
 ```
 
 #### Open the following url for view swagger documentation
-## (http://localhost:3031/swagger-doc)
+## (http://localhost:3031/swagger-docs)

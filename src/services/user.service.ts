@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { UserModel } from "../models/user.model";
+import { UserModel } from "@main/models/user.model";
 const jsonwebtoken = require("jsonwebtoken");
 
 const getUserInfoByToken = async (req: Request) => {

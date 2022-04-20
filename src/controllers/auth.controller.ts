@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 import { ObjectId } from "mongoose";
 // Model
-import { UserModel, UserStatus } from "../models/user.model";
+import { UserModel, UserStatus } from "@main/models/user.model";
 // Utilities
-import catchAsyncErr from "../utils/catchAsync";
-import apiResponse from "../utils/response";
-import { accessTokenDetailAndRefreshTokenDetail } from "../utils/tokens";
-import { modelValidationCheck } from "../utils/validationError";
+import catchAsyncErr from "@main/utils/catchAsync";
+import apiResponse from "@main/utils/response";
+import { accessTokenDetailAndRefreshTokenDetail } from "@main/utils/tokens";
+import { modelValidationCheck } from "@main/utils/validationError";
 
 const jwt = require("jsonwebtoken");
 const mongoose = require('mongoose')

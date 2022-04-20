@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { validateRequest } from "../utils/validationError";
+import { validateRequest } from "@main/utils/validationError";
 
 const register = {
   body: Joi.object({

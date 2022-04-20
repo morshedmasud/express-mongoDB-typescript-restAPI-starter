@@ -1,4 +1,7 @@
 require("dotenv/config");
+// Import Routes
+import authRoute from "@main/routes/auth.route";
+import userRoute from "@main/routes/user.route";
 import bodyParser from "body-parser";
 import express, { Request, Response } from "express";
 import mongoSanitize from "express-mongo-sanitize";
@@ -12,9 +15,6 @@ import dbConnect from "./mongoose";
 import { expressDevLogger } from "./morgan";
 import passportHttpInit from "./passport-http";
 import passportJwtInit from "./passport-jwt";
-// Import Routes
-import authRoute from "@main/routes/auth.route";
-import userRoute from "@main/routes/user.route";
 
 const xssClean = require("xss-clean");
 const swaggerFile = require("../../swagger");
@@ -27,8 +27,8 @@ export const createServer = async () => {
   server.use(xssClean()); // sanitize request data
   server.use(mongoSanitize()); // sanitize mongoose data
 
-  // morganBody(server);
-  // server.use(expressDevLogger); // Custome logger
+  morganBody(server);
+  server.use(expressDevLogger); // custom logger
 
   server.use(passport.initialize()); // passport authentication initialize
   passport.use("basic", passportHttpInit); // passport http authentication initialize

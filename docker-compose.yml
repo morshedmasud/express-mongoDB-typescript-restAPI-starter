@@ -1,0 +1,19 @@
+version: "3"
+services:
+  app:
+    container_name: express_mongo
+    restart: always
+    build: ./
+    ports:
+      - "3031:3031"
+    volumes:
+      - .:/app
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - "./data:/data/db"

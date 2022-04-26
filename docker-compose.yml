@@ -6,6 +6,8 @@ services:
     build: ./
     ports:
       - "3031:3031"
+    environment:
+      - 'DB_URL=mongodb://mongo:27017/boilerplate-DB'
     volumes:
       - .:/app
     links:
@@ -14,6 +16,6 @@ services:
     container_name: mongo
     image: mongo
     ports:
-      - "127.0.0.1:27017:27017"
+      - "27017:27017"
     volumes:
       - "./data:/data/db"

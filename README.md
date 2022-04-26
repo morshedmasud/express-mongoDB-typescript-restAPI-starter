@@ -13,7 +13,7 @@
 * Data Validation with JOI
 * Unit Testing
 * Email Verification (Coming Soon)
-* Docker (Coming Soon)
+* Docker Configuration
 * Swagger Documentation
 
 ## Setup in your local machine
@@ -42,7 +42,16 @@ yarn build
 yarn run start
 ```
 
-6. Testing
+6. Run With Docker
+```shell script
+// build
+sudo docker-compose build
+
+// run
+sudo docker-compose up
+```
+
+7. Testing
 ```shell script
 // run all unit-test
 yarn run test:unit
@@ -50,6 +59,7 @@ yarn run test:unit
 // run individual unit-test file
 yarn run test:unit src/services/__tests__/auth.ts
 ```
+
 
 #### Open the following url for view swagger documentation
 ## (http://localhost:3031/swagger-docs)

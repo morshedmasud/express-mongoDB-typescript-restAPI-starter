@@ -1,0 +1,21 @@
+version: "3"
+services:
+  app:
+    container_name: express_mongo
+    restart: always
+    build: ./
+    ports:
+      - "3031:3031"
+    environment:
+      - 'DB_URL=mongodb://mongo:27017/boilerplate-DB'
+    volumes:
+      - .:/app
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./data:/data/db"

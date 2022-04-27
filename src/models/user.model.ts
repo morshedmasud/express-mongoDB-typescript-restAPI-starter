@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
 import mongoose from "mongoose";
 
 const status = Object.freeze({
@@ -13,9 +14,11 @@ export interface UserDocument extends mongoose.Document {
   password: string;
   photo: string;
   status: string;
+  isEmailVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
+  generateVerificationToken(): Promise<string>;
 }
 
 const UserSchema = new mongoose.Schema(
@@ -33,7 +36,7 @@ const UserSchema = new mongoose.Schema(
       max: 255,
       unique: true,
       trim: true,
-      lowercase: true
+      lowercase: true,
     },
     photo: {
       type: String,
@@ -45,6 +48,11 @@ const UserSchema = new mongoose.Schema(
       required: true,
       min: 6,
       max: 255,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     status: {
       type: String,
@@ -80,6 +88,17 @@ UserSchema.methods.comparePassword = async function (
   const user = this as UserDocument;
 
   return bcrypt.compare(candidatePassword, user.password).catch(() => false);
+};
+
+// User for generate email verification token
+UserSchema.methods.generateVerificationToken = async function () {
+  const user = this;
+  const verificationToken = jsonwebtoken.sign(
+    { ID: user._id },
+    process.env.USER_VERIFICATION_TOKEN_SECRET as string,
+    { expiresIn: "7d" }
+  );
+  return verificationToken;
 };
 
 UserSchema.methods.toJSON = function () {

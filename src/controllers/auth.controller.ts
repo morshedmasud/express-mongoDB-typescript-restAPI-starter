@@ -1,16 +1,18 @@
-import { Request, Response } from "express";
-import httpStatus from "http-status";
-import { ObjectId } from "mongoose";
 // Model
 import { UserModel, UserStatus } from "@main/models/user.model";
 // Utilities
 import catchAsyncErr from "@main/utils/catchAsync";
+import { Constants } from "@main/utils/constants";
+import { sendMail } from "@main/utils/email";
 import apiResponse from "@main/utils/response";
 import { accessTokenDetailAndRefreshTokenDetail } from "@main/utils/tokens";
 import { modelValidationCheck } from "@main/utils/validationError";
+import { Request, Response } from "express";
+import httpStatus from "http-status";
+import { ObjectId } from "mongoose";
 
 const jwt = require("jsonwebtoken");
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 type userT = {
   _id: ObjectId;
@@ -64,7 +66,22 @@ const userRegister = catchAsyncErr(async (req: Request, res: Response) => {
   }
   const save = await newUser.save();
 
-  return apiResponse(res, httpStatus.CREATED, { data: save });
+  // Generate a verification token with the user's ID
+  const verificationToken = await save.generateVerificationToken();
+
+  const smsRes = await sendMail({
+    to: newUser.email,
+    subject: "Email Verification",
+    body: `
+    Hi ${newUser.name}, Click <a href = '${Constants.BASE_ENDPOINT}/auth/email-verify/${verificationToken}'>here</a> to verify your email.
+    `,
+  });
+
+  return apiResponse(res, httpStatus.CREATED, {
+    data: save,
+    message:
+      "Registration Completed, We've sent an email verification link to your email address.",
+  });
 });
 
 const userLogin = catchAsyncErr(async (req: any, res: Response) => {
@@ -138,4 +155,32 @@ const renewToken = catchAsyncErr(async (req: any, res: Response) => {
   });
 });
 
-export { userRegister, userLogin, renewToken };
+const emailTokenVerify = catchAsyncErr(async (req: any, res: Response) => {
+  const { token } = req.params;
+
+  // verify the token from the URL
+  let payload = null;
+  try {
+    payload = jwt.verify(token, process.env.USER_VERIFICATION_TOKEN_SECRET);
+  } catch (err) {
+    return apiResponse(res, httpStatus.NOT_ACCEPTABLE, {
+      message: "Invalid Email!",
+    });
+  }
+
+  // update verified status
+  const user = await UserModel.findOne({ _id: payload.ID });
+  if (!user)
+    return apiResponse(res, httpStatus.BAD_REQUEST, {
+      message: "something went wrong!",
+    });
+
+  user.isEmailVerified = true;
+  await user.save();
+
+  return apiResponse(res, httpStatus.OK, {
+    message: "Congratulation! your email is now verified",
+  });
+});
+
+export { userRegister, userLogin, renewToken, emailTokenVerify };

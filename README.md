@@ -12,7 +12,7 @@
 * OAuth 2.0 (Authentication with Access & Refresh Token)
 * Data Validation with JOI
 * Unit Testing
-* Email Verification (Coming Soon)
+* Email Verification
 * Docker Configuration
 * Swagger Documentation
 
